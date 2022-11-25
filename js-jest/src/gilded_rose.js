@@ -5,7 +5,6 @@ class Item {
     this.quality = quality;
   }
 }
-
 class Shop {
   constructor(items=[]){
     this.items = items;
@@ -56,6 +55,7 @@ class Shop {
         }
       }
     }
+    console.log(this.items)
 
     return this.items;
   }
