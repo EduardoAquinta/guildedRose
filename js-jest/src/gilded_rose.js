@@ -17,12 +17,16 @@ class Shop {
         this.items[i].sellIn -= 1;
       }
 
-      //applies -1 quality if not brie or BSP if quality is above 0
+      //applies -1 quality if not brie or BSP, and -2 if past the sellIn date
       if (this.items[i].name !== 'Aged Brie'
-          && this.items[i].name !== 'Backstage passes to a TAFKAL80ETC concert'
-          && this.items[i].quality > 0)
-      {
+          && this.items[i].name !== 'Backstage passes to a TAFKAL80ETC concert') {
+        switch (true) {
+          case this.items[i].sellIn >=0:
             this.items[i].quality -= 1;
+            break;
+          case this.items[i].sellIn < 0:
+            this.items[i].quality -=2;
+        }
       }
 
       //Aged Brie and BSP increase in quality each day
@@ -44,19 +48,13 @@ class Shop {
         }
       }
 
-      //when the item is normal and has passed it's sellIn date, quality degrades an extra step
-      if(this.items[i].sellIn < 0 && this.items.name !== "Aged Brie"
-          && this.items.name !== "Backstage passes to a TAFKAL80ETC concert")
-      {
-        this.items[i].quality -= 1;
-      }
-
       //Backstage pass is worthless after the concert, as is any item that has reached quality zero
       if( (this.items[i].sellIn < 0
               && this.items[i].name === "Backstage passes to a TAFKAL80ETC concert")
                 || this.items[i].quality <= 0) {
         this.items[i].quality = 0;
       }
+
       //Item quality can never reach above 50
       if( this.items[i].quality >= 50)
       {
