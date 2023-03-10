@@ -67,7 +67,7 @@ describe("Gilded Rose", () => {
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(0);
   });
-  it('should return +2 quality if an item if marked as Conjured', () =>{
+  it('should return +2 quality if an item is marked as Conjured', () =>{
     const gildedRose = new Shop([new Item("Grapes, Conjured", 10, 20)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(18);
