@@ -10,66 +10,67 @@ class Shop {
     this.items = items;
   }
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
+
+    for (let item of this.items) {
 
       // applies -1 sellIn to everything except Sulfura
-      if (this.items[i].name !== 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn -= 1;
+      if (item.name !== 'Sulfuras, Hand of Ragnaros') {
+        item.sellIn -= 1;
       }
 
       //applies -1 quality if not brie or BSP, and -2 if past the sellIn date
-      if (this.items[i].name !== 'Aged Brie'
-          && this.items[i].name !== 'Backstage passes to a TAFKAL80ETC concert') {
+      if (item.name !== 'Aged Brie'
+          && item.name !== 'Backstage passes to a TAFKAL80ETC concert') {
         switch (true) {
-          case this.items[i].sellIn >=0:
-            this.items[i].quality -= 1;
+          case item.sellIn >=0:
+            item.quality -= 1;
             break;
-          case this.items[i].sellIn < 0:
-            this.items[i].quality -=2;
+          case item.sellIn < 0:
+            item.quality -=2;
         }
       }
 
       //Aged Brie and BSP increase in quality each day
-      if(this.items[i].name === "Aged Brie" || this.items[i].name === "Backstage passes to a TAFKAL80ETC concert")
+      if (item.name === "Aged Brie" || item.name === "Backstage passes to a TAFKAL80ETC concert")
       {
-        this.items[i].quality += 1;
+        item.quality += 1;
       }
 
         //BSP increases in quality the closer to the sellIn date.
-      if (this.items[i].name === "Backstage passes to a TAFKAL80ETC concert")
+      if (item.name === "Backstage passes to a TAFKAL80ETC concert")
       {
         switch (true)
         {
-          case (this.items[i].sellIn > 5 && this.items[i].sellIn <= 10) :
-            this.items[i].quality += 1;
+          case (item.sellIn > 5 && item.sellIn <= 10) :
+            item.quality += 1;
             break;
-          case this.items[i].sellIn <= 5:
-            this.items[i].quality += 2;
+          case item.sellIn <= 5:
+            item.quality += 2;
         }
       }
 
       //Backstage pass is worthless after the concert, as is any item that has reached quality zero
-      if( (this.items[i].sellIn < 0
-              && this.items[i].name === "Backstage passes to a TAFKAL80ETC concert")
-                || this.items[i].quality <= 0) {
-        this.items[i].quality = 0;
+      if ( (item.sellIn < 0
+              && item.name === "Backstage passes to a TAFKAL80ETC concert")
+                || item.quality <= 0) {
+        item.quality = 0;
       }
 
       //Item quality can never reach above 50
-      if( this.items[i].quality >= 50)
+      if (item.quality >= 50)
       {
-        this.items[i].quality = 50;
+        item.quality = 50;
       }
 
       //Sulfuras can have its own quality assignment
-      if (this.items[i].name === 'Sulfuras, Hand of Ragnaros')
+      if (item.name === 'Sulfuras, Hand of Ragnaros')
       {
-        this.items[i].quality = 80;
+        item.quality = 80;
       }
       //Conjured has an extra -1 quality.
-      if (this.items[i].name.includes("Conjured"))
+      if (item.name.includes("Conjured"))
       {
-        this.items[i].quality -= 1;
+        item.quality -= 1;
       }
     }
     return this.items;
